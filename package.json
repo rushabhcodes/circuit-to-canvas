@@ -1,0 +1,13 @@
+{
+  "name": "circuit-to-canvas",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "bun-match-svg": "^0.0.14"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
