@@ -25,7 +25,10 @@ export class CircuitToCanvasDrawer {
 
   constructor(canvasOrContext: CanvasLike | CanvasContext) {
     // Check if it's a canvas element (works in both browser and Node.js)
-    if ("getContext" in canvasOrContext && typeof canvasOrContext.getContext === "function") {
+    if (
+      "getContext" in canvasOrContext &&
+      typeof canvasOrContext.getContext === "function"
+    ) {
       const ctx = canvasOrContext.getContext("2d")
       if (!ctx) {
         throw new Error("Failed to get 2D rendering context from canvas")

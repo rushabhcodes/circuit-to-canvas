@@ -19,7 +19,9 @@ test("draw rect", async () => {
     transform: identity(),
   })
 
-  await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(import.meta.path)
+  await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
+    import.meta.path,
+  )
 })
 
 test("draw rect with border radius", async () => {

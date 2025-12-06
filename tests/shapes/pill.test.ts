@@ -19,7 +19,9 @@ test("draw horizontal pill", async () => {
     transform: identity(),
   })
 
-  await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(import.meta.path)
+  await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
+    import.meta.path,
+  )
 })
 
 test("draw vertical pill", async () => {

@@ -24,7 +24,9 @@ test("draw circular plated hole", async () => {
 
   drawer.drawElements([hole])
 
-  await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(import.meta.path)
+  await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
+    import.meta.path,
+  )
 })
 
 test("draw oval plated hole", async () => {

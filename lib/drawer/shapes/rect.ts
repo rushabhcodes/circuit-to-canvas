@@ -48,7 +48,13 @@ export function drawRect(params: DrawRectParams): void {
     ctx.lineTo(x + scaledWidth - r, y)
     ctx.arcTo(x + scaledWidth, y, x + scaledWidth, y + r, r)
     ctx.lineTo(x + scaledWidth, y + scaledHeight - r)
-    ctx.arcTo(x + scaledWidth, y + scaledHeight, x + scaledWidth - r, y + scaledHeight, r)
+    ctx.arcTo(
+      x + scaledWidth,
+      y + scaledHeight,
+      x + scaledWidth - r,
+      y + scaledHeight,
+      r,
+    )
     ctx.lineTo(x + r, y + scaledHeight)
     ctx.arcTo(x, y + scaledHeight, x, y + scaledHeight - r, r)
     ctx.lineTo(x, y + r)

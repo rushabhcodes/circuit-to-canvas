@@ -19,5 +19,7 @@ test("draw oval", async () => {
     transform: identity(),
   })
 
-  await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(import.meta.path)
+  await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
+    import.meta.path,
+  )
 })

@@ -7,7 +7,13 @@ import type { Matrix } from "transformation-matrix"
 export interface CanvasContext {
   beginPath(): void
   closePath(): void
-  arc(x: number, y: number, radius: number, startAngle: number, endAngle: number): void
+  arc(
+    x: number,
+    y: number,
+    radius: number,
+    startAngle: number,
+    endAngle: number,
+  ): void
   arcTo(x1: number, y1: number, x2: number, y2: number, radius: number): void
   ellipse(
     x: number,
