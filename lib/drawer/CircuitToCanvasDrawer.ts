@@ -49,6 +49,7 @@ import { drawPcbFabricationNotePath } from "./elements/pcb-fabrication-note-path
 
 export interface DrawElementsOptions {
   layers?: string[]
+  showComponents?: boolean
 }
 
 interface CanvasLike {
@@ -279,7 +280,7 @@ export class CircuitToCanvasDrawer {
       })
     }
 
-    if (element.type === "pcb_component") {
+    if (element.type === "pcb_component" && options.showComponents) {
       drawPcbComponent({
         ctx: this.ctx,
         component: element as PcbComponent,

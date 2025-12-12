@@ -35,7 +35,7 @@ test("draw component on board", async () => {
     },
   ]
 
-  drawer.drawElements(elements)
+  drawer.drawElements(elements, { showComponents: true })
 
   await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
     import.meta.path,
@@ -63,7 +63,7 @@ test("draw rotated component", async () => {
     obstructs_within_bounds: false,
   }
 
-  drawer.drawElements([component])
+  drawer.drawElements([component], { showComponents: true })
 
   await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
     import.meta.path,
@@ -91,7 +91,7 @@ test("draw bottom layer component", async () => {
     obstructs_within_bounds: false,
   }
 
-  drawer.drawElements([component])
+  drawer.drawElements([component], { showComponents: true })
 
   await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
     import.meta.path,

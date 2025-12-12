@@ -23,8 +23,8 @@ export function drawPcbComponent(params: DrawPcbComponentParams): void {
     height,
     rotation,
     fill: "transparent",
-    stroke: colorMap.courtyard,
-    strokeWidth: 0.1, // Thicker line for visibility
+    stroke: colorMap.component,
+    strokeWidth: 0.5, // Thicker line for visibility
     isStrokeDashed: layer === "bottom", // Dashed for bottom layer
     transform,
   })
