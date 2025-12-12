@@ -195,6 +195,8 @@ test("draw silkscreen on component", async () => {
       center: { x: 75, y: 50 },
       width: 60,
       height: 30,
+      pcb_component_id: "comp1",
+      stroke_width: 0.1,
     },
     // Pin 1 indicator
     {
@@ -203,6 +205,8 @@ test("draw silkscreen on component", async () => {
       layer: "top" as const,
       center: { x: 55, y: 40 },
       radius: 3,
+      pcb_component_id: "comp1",
+      stroke_width: 0.1,
     },
     // Component label
     {
@@ -212,6 +216,9 @@ test("draw silkscreen on component", async () => {
       text: "IC1",
       anchor_position: { x: 75, y: 50 },
       font_size: 8,
+      font: "tscircuit2024" as const,
+      anchor_alignment: "center" as const,
+      pcb_component_id: "comp1",
     },
     // SMT pads
     {
