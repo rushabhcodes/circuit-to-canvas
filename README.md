@@ -90,7 +90,7 @@ This checklist tracks PCB drawing features from [circuit-to-svg](https://github.
 
 ### Visualization Features
 
-- [ ] Rats nest visualization - Unrouted connection indicators
+- [x] Rats nest visualization - Unrouted connection indicators
 - [ ] PCB grid overlay - Configurable grid with major/minor lines
 - [ ] Soldermask rendering - Soldermask layer visualization
 - [ ] Anchor offset indicators - Debug indicators for relative positioning

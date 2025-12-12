@@ -16,6 +16,7 @@ import type {
   PcbCopperText,
   PcbFabricationNoteRect,
 } from "circuit-json"
+import type { ConnectivityMap } from "circuit-json-to-connectivity-map"
 import { identity, compose, translate, scale } from "transformation-matrix"
 import type { Matrix } from "transformation-matrix"
 import {
@@ -42,6 +43,7 @@ import { drawPcbCutout } from "./elements/pcb-cutout"
 import { drawPcbCopperPour } from "./elements/pcb-copper-pour"
 import { drawPcbCopperText } from "./elements/pcb-copper-text"
 import { drawPcbFabricationNoteRect } from "./elements/pcb-fabrication-note-rect"
+import { drawPcbRatsNest } from "../pcb/create-canvas-objects-from-pcb-rats-nest"
 
 export interface DrawElementsOptions {
   layers?: string[]
@@ -134,6 +136,19 @@ export class CircuitToCanvasDrawer {
     for (const element of elements) {
       this.drawElement(element, options)
     }
+  }
+
+  drawRatsNest(
+    circuitJson: AnyCircuitElement[],
+    connectivity: ConnectivityMap,
+  ): void {
+    drawPcbRatsNest({
+      ctx: this.ctx,
+      circuitJson,
+      connectivity,
+      transform: this.realToCanvasMat,
+      colorMap: this.colorMap,
+    })
   }
 
   private drawElement(
