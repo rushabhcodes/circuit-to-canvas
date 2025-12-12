@@ -5,6 +5,16 @@ import type { Matrix } from "transformation-matrix"
 import type { CanvasContext, PcbColorMap } from "../../drawer/types"
 import { drawLine } from "../../drawer/shapes/line"
 
+// Dash pattern for rats nest lines: [dash length, gap length] in canvas units
+// Using [1, 1] creates a dotted pattern where dashes and gaps are equal length
+// This provides clear visual distinction for unrouted connections
+const RATS_NEST_LINE_DASH: number[] = [1, 1]
+
+// Line width for rats nest connections in real-world units (millimeters)
+// Using 0.1mm provides thin, subtle lines that are visible but don't overpower
+// the main PCB elements. The drawLine utility scales this by the transform matrix.
+const RATS_NEST_LINE_WIDTH = 0.1
+
 interface Position {
   x: number
   y: number
@@ -42,7 +52,8 @@ export const findNearestPointInNet = (
   connectivity: ConnectivityMap,
   circuitJson: AnyCircuitElement[],
 ): { x: number; y: number } | null => {
-  const connectedIds = connectivity.getIdsConnectedToNet(netId)
+  const connectedIds = connectivity.netMap[netId]
+  if (!connectedIds) return null
   let nearestPoint: { x: number; y: number } | null = null
   let minDistance = Infinity
 
@@ -116,11 +127,11 @@ export const drawPcbRatsNest = ({
             ctx,
             start: sourcePos,
             end: nearestPos,
-            strokeWidth: 0.1, // Thin lines
+            strokeWidth: RATS_NEST_LINE_WIDTH,
             stroke: colorMap.silkscreen.top,
             transform,
             lineCap: "round",
-            lineDash: [1, 1], // Dotted pattern
+            lineDash: RATS_NEST_LINE_DASH,
           })
         }
       }
