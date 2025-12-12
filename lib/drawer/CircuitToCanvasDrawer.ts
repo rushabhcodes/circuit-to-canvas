@@ -283,6 +283,11 @@ export class CircuitToCanvasDrawer {
       drawPcbComponent({
         ctx: this.ctx,
         component: element as PcbComponent,
+        transform: this.realToCanvasMat,
+        colorMap: this.colorMap,
+      })
+    }
+
     if (element.type === "pcb_fabrication_note_path") {
       drawPcbFabricationNotePath({
         ctx: this.ctx,
