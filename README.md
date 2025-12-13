@@ -71,7 +71,7 @@ This checklist tracks PCB drawing features from [circuit-to-svg](https://github.
 
 ### Fabrication Notes
 
-- [ ] `pcb_fabrication_note_text` - Fabrication note text
+- [x] `pcb_fabrication_note_text` - Fabrication note text
 - [ ] `pcb_fabrication_note_rect` - Fabrication note rectangles
 - [ ] `pcb_fabrication_note_path` - Fabrication note paths
 - [ ] `pcb_fabrication_note_dimension` - Fabrication dimension annotations
