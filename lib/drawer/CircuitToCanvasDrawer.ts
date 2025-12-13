@@ -301,7 +301,7 @@ export class CircuitToCanvasDrawer {
         colorMap: this.colorMap,
       })
     }
-      
+
     if (element.type === "pcb_note_rect") {
       drawPcbNoteRect({
         transform: this.realToCanvasMat,
