@@ -13,7 +13,7 @@ test("draw lowercase text with descenders", async () => {
   ctx.fillStyle = "#1a1a1a"
   ctx.fillRect(0, 0, canvas.width / SCALE, canvas.height / SCALE)
 
-  // Draw baseline reference line
+  // Draw reference line
   ctx.strokeStyle = "#666666"
   ctx.lineWidth = 0.5
   ctx.beginPath()

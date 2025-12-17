@@ -88,7 +88,6 @@ export function drawPcbSilkscreenText(
   ctx.font = `${fontSize}px sans-serif`
   ctx.fillStyle = color
   ctx.textAlign = mapAnchorAlignment(text.anchor_alignment)
-  ctx.textBaseline = "middle"
   ctx.fillText(text.text, 0, 0)
   ctx.restore()
 }

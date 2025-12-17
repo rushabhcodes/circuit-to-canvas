@@ -20,7 +20,7 @@ test("draw copper text", async () => {
       pcb_copper_text_id: "copper-text-1",
       pcb_component_id: "component1",
       layer: "top",
-      text: "T1",
+      text: "AabcbCdde",
       anchor_position: { x: 40, y: 40 },
       anchor_alignment: "center",
       font: "tscircuit2024",

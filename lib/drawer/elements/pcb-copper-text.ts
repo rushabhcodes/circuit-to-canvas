@@ -72,10 +72,8 @@ export function drawPcbCopperText(params: DrawPcbCopperTextParams): void {
     const paddingTop = padding.top * scale
     const paddingBottom = padding.bottom * scale
     // Calculate knockout rectangle to cover the text box
-    // startY is the baseline position, text box extends from (baseline - baselineOffset) to (baseline + descenderDepth)
-    const textBoxTop = startY - layout.baselineOffset - layout.strokeWidth / 2
-    const textBoxBottom =
-      startY + layout.descenderDepth + layout.strokeWidth / 2
+    const textBoxTop = startY - layout.strokeWidth / 2
+    const textBoxBottom = startY + layout.height + layout.strokeWidth / 2
     const textBoxHeight = textBoxBottom - textBoxTop
 
     const xOffset = startX - paddingLeft
