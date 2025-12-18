@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test"
-import { createCanvas } from "canvas"
+import { createCanvas } from "@napi-rs/canvas"
 import { identity } from "transformation-matrix"
 import { drawOval } from "../../lib/drawer/shapes/oval"
 
