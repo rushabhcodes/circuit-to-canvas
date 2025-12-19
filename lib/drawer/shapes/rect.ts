@@ -8,7 +8,7 @@ export interface DrawRectParams {
   width: number
   height: number
   fill?: string
-  transform: Matrix
+  realToCanvasMat: Matrix
   borderRadius?: number
   rotation?: number
   stroke?: string
@@ -23,7 +23,7 @@ export function drawRect(params: DrawRectParams): void {
     width,
     height,
     fill,
-    transform,
+    realToCanvasMat,
     borderRadius = 0,
     rotation = 0,
     stroke,
@@ -31,12 +31,12 @@ export function drawRect(params: DrawRectParams): void {
     isStrokeDashed = false,
   } = params
 
-  const [cx, cy] = applyToPoint(transform, [center.x, center.y])
-  const scaledWidth = width * Math.abs(transform.a)
-  const scaledHeight = height * Math.abs(transform.a)
-  const scaledRadius = borderRadius * Math.abs(transform.a)
+  const [cx, cy] = applyToPoint(realToCanvasMat, [center.x, center.y])
+  const scaledWidth = width * Math.abs(realToCanvasMat.a)
+  const scaledHeight = height * Math.abs(realToCanvasMat.a)
+  const scaledRadius = borderRadius * Math.abs(realToCanvasMat.a)
   const scaledStrokeWidth = strokeWidth
-    ? strokeWidth * Math.abs(transform.a)
+    ? strokeWidth * Math.abs(realToCanvasMat.a)
     : undefined
 
   ctx.save()

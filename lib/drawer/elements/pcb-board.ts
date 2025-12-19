@@ -7,12 +7,12 @@ import { drawRect } from "../shapes/rect"
 export interface DrawPcbBoardParams {
   ctx: CanvasContext
   board: PcbBoard
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export function drawPcbBoard(params: DrawPcbBoardParams): void {
-  const { ctx, board, transform, colorMap } = params
+  const { ctx, board, realToCanvasMat, colorMap } = params
   const { width, height, center, outline } = board
 
   // If the board has a custom outline, draw it as a path
@@ -22,7 +22,7 @@ export function drawPcbBoard(params: DrawPcbBoardParams): void {
       points: outline.map((p) => ({ x: p.x, y: p.y })),
       stroke: colorMap.boardOutline,
       strokeWidth: 0.1,
-      transform,
+      realToCanvasMat,
       closePath: true,
     })
     return
@@ -37,7 +37,7 @@ export function drawPcbBoard(params: DrawPcbBoardParams): void {
       width,
       height,
       fill: "transparent",
-      transform,
+      realToCanvasMat,
     })
 
     // Draw the outline stroke separately using path
@@ -55,7 +55,7 @@ export function drawPcbBoard(params: DrawPcbBoardParams): void {
       points: corners,
       stroke: colorMap.boardOutline,
       strokeWidth: 0.1,
-      transform,
+      realToCanvasMat,
       closePath: true,
     })
   }

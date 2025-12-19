@@ -16,7 +16,7 @@ test("draw oval", async () => {
     width: 70,
     height: 40,
     fill: "#0000ff",
-    transform: identity(),
+    realToCanvasMat: identity(),
   })
 
   await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(

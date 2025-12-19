@@ -6,7 +6,7 @@ import { drawLine } from "../shapes/line"
 export interface DrawPcbTraceParams {
   ctx: CanvasContext
   trace: PCBTrace
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
@@ -18,7 +18,7 @@ function layerToColor(layer: string, colorMap: PcbColorMap): string {
 }
 
 export function drawPcbTrace(params: DrawPcbTraceParams): void {
-  const { ctx, trace, transform, colorMap } = params
+  const { ctx, trace, realToCanvasMat, colorMap } = params
 
   if (!trace.route || !Array.isArray(trace.route) || trace.route.length < 2) {
     return
@@ -52,7 +52,7 @@ export function drawPcbTrace(params: DrawPcbTraceParams): void {
       end: { x: end.x, y: end.y },
       strokeWidth: traceWidth,
       stroke: color,
-      transform,
+      realToCanvasMat,
       lineCap: "round",
     })
   }

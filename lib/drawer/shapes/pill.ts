@@ -8,16 +8,24 @@ export interface DrawPillParams {
   width: number
   height: number
   fill: string
-  transform: Matrix
+  realToCanvasMat: Matrix
   rotation?: number
 }
 
 export function drawPill(params: DrawPillParams): void {
-  const { ctx, center, width, height, fill, transform, rotation = 0 } = params
+  const {
+    ctx,
+    center,
+    width,
+    height,
+    fill,
+    realToCanvasMat,
+    rotation = 0,
+  } = params
 
-  const [cx, cy] = applyToPoint(transform, [center.x, center.y])
-  const scaledWidth = width * Math.abs(transform.a)
-  const scaledHeight = height * Math.abs(transform.a)
+  const [cx, cy] = applyToPoint(realToCanvasMat, [center.x, center.y])
+  const scaledWidth = width * Math.abs(realToCanvasMat.a)
+  const scaledHeight = height * Math.abs(realToCanvasMat.a)
 
   ctx.save()
   ctx.translate(cx, cy)

@@ -6,14 +6,14 @@ import { drawLine } from "../shapes/line"
 export interface DrawPcbFabricationNotePathParams {
   ctx: CanvasContext
   path: PcbFabricationNotePath
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export function drawPcbFabricationNotePath(
   params: DrawPcbFabricationNotePathParams,
 ): void {
-  const { ctx, path, transform, colorMap } = params
+  const { ctx, path, realToCanvasMat, colorMap } = params
 
   // Use the color from the path if provided, otherwise use a default color
   // Fabrication notes are typically shown in a distinct color
@@ -35,7 +35,7 @@ export function drawPcbFabricationNotePath(
       end: { x: end.x, y: end.y },
       strokeWidth: path.stroke_width ?? 0.1,
       stroke: color,
-      transform,
+      realToCanvasMat,
     })
   }
 }

@@ -16,35 +16,35 @@ import { drawPath } from "../shapes/path"
 export interface DrawPcbSilkscreenTextParams {
   ctx: CanvasContext
   text: PcbSilkscreenText
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export interface DrawPcbSilkscreenRectParams {
   ctx: CanvasContext
   rect: PcbSilkscreenRect
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export interface DrawPcbSilkscreenCircleParams {
   ctx: CanvasContext
   circle: PcbSilkscreenCircle
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export interface DrawPcbSilkscreenLineParams {
   ctx: CanvasContext
   line: PcbSilkscreenLine
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export interface DrawPcbSilkscreenPathParams {
   ctx: CanvasContext
   path: PcbSilkscreenPath
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
@@ -66,15 +66,15 @@ function mapAnchorAlignment(
 export function drawPcbSilkscreenText(
   params: DrawPcbSilkscreenTextParams,
 ): void {
-  const { ctx, text, transform, colorMap } = params
+  const { ctx, text, realToCanvasMat, colorMap } = params
 
   const color = layerToSilkscreenColor(text.layer, colorMap)
-  const [x, y] = applyToPoint(transform, [
+  const [x, y] = applyToPoint(realToCanvasMat, [
     text.anchor_position.x,
     text.anchor_position.y,
   ])
 
-  const fontSize = (text.font_size ?? 1) * Math.abs(transform.a)
+  const fontSize = (text.font_size ?? 1) * Math.abs(realToCanvasMat.a)
   const rotation = text.ccw_rotation ?? 0
 
   ctx.save()
@@ -95,7 +95,7 @@ export function drawPcbSilkscreenText(
 export function drawPcbSilkscreenRect(
   params: DrawPcbSilkscreenRectParams,
 ): void {
-  const { ctx, rect, transform, colorMap } = params
+  const { ctx, rect, realToCanvasMat, colorMap } = params
 
   const color = layerToSilkscreenColor(rect.layer, colorMap)
 
@@ -105,14 +105,14 @@ export function drawPcbSilkscreenRect(
     width: rect.width,
     height: rect.height,
     fill: color,
-    transform,
+    realToCanvasMat,
   })
 }
 
 export function drawPcbSilkscreenCircle(
   params: DrawPcbSilkscreenCircleParams,
 ): void {
-  const { ctx, circle, transform, colorMap } = params
+  const { ctx, circle, realToCanvasMat, colorMap } = params
 
   const color = layerToSilkscreenColor(circle.layer, colorMap)
 
@@ -121,14 +121,14 @@ export function drawPcbSilkscreenCircle(
     center: circle.center,
     radius: circle.radius,
     fill: color,
-    transform,
+    realToCanvasMat,
   })
 }
 
 export function drawPcbSilkscreenLine(
   params: DrawPcbSilkscreenLineParams,
 ): void {
-  const { ctx, line, transform, colorMap } = params
+  const { ctx, line, realToCanvasMat, colorMap } = params
 
   const color = layerToSilkscreenColor(line.layer, colorMap)
 
@@ -138,14 +138,14 @@ export function drawPcbSilkscreenLine(
     end: { x: line.x2, y: line.y2 },
     strokeWidth: line.stroke_width ?? 0.1,
     stroke: color,
-    transform,
+    realToCanvasMat,
   })
 }
 
 export function drawPcbSilkscreenPath(
   params: DrawPcbSilkscreenPathParams,
 ): void {
-  const { ctx, path, transform, colorMap } = params
+  const { ctx, path, realToCanvasMat, colorMap } = params
 
   const color = layerToSilkscreenColor(path.layer, colorMap)
 
@@ -164,7 +164,7 @@ export function drawPcbSilkscreenPath(
       end: { x: end.x, y: end.y },
       strokeWidth: path.stroke_width ?? 0.1,
       stroke: color,
-      transform,
+      realToCanvasMat,
     })
   }
 }

@@ -8,7 +8,7 @@ import { drawPolygon } from "../shapes/polygon"
 export interface DrawPcbCopperPourParams {
   ctx: CanvasContext
   pour: PcbCopperPour
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
@@ -20,7 +20,7 @@ function layerToColor(layer: string, colorMap: PcbColorMap): string {
 }
 
 export function drawPcbCopperPour(params: DrawPcbCopperPourParams): void {
-  const { ctx, pour, transform, colorMap } = params
+  const { ctx, pour, realToCanvasMat, colorMap } = params
 
   const color = layerToColor(pour.layer, colorMap)
 
@@ -29,9 +29,12 @@ export function drawPcbCopperPour(params: DrawPcbCopperPourParams): void {
 
   if (pour.shape === "rect") {
     // Draw the copper pour rectangle with 50% opacity
-    const [cx, cy] = applyToPoint(transform, [pour.center.x, pour.center.y])
-    const scaledWidth = pour.width * Math.abs(transform.a)
-    const scaledHeight = pour.height * Math.abs(transform.a)
+    const [cx, cy] = applyToPoint(realToCanvasMat, [
+      pour.center.x,
+      pour.center.y,
+    ])
+    const scaledWidth = pour.width * Math.abs(realToCanvasMat.a)
+    const scaledHeight = pour.height * Math.abs(realToCanvasMat.a)
 
     ctx.translate(cx, cy)
 
@@ -50,11 +53,11 @@ export function drawPcbCopperPour(params: DrawPcbCopperPourParams): void {
 
   if (pour.shape === "polygon") {
     if (pour.points && pour.points.length >= 3) {
-      const transformedPoints = pour.points.map((p: { x: number; y: number }) =>
-        applyToPoint(transform, [p.x, p.y]),
+      const canvasPoints = pour.points.map((p: { x: number; y: number }) =>
+        applyToPoint(realToCanvasMat, [p.x, p.y]),
       )
 
-      const firstPoint = transformedPoints[0]
+      const firstPoint = canvasPoints[0]
       if (!firstPoint) {
         ctx.restore()
         return
@@ -64,8 +67,8 @@ export function drawPcbCopperPour(params: DrawPcbCopperPourParams): void {
       const [firstX, firstY] = firstPoint
       ctx.moveTo(firstX, firstY)
 
-      for (let i = 1; i < transformedPoints.length; i++) {
-        const point = transformedPoints[i]
+      for (let i = 1; i < canvasPoints.length; i++) {
+        const point = canvasPoints[i]
         if (!point) continue
         const [x, y] = point
         ctx.lineTo(x, y)

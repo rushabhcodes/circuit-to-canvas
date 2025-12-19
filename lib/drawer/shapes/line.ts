@@ -8,7 +8,7 @@ export interface DrawLineParams {
   end: { x: number; y: number }
   strokeWidth: number
   stroke: string
-  transform: Matrix
+  realToCanvasMat: Matrix
   lineCap?: "butt" | "round" | "square"
 }
 
@@ -19,13 +19,13 @@ export function drawLine(params: DrawLineParams): void {
     end,
     strokeWidth,
     stroke,
-    transform,
+    realToCanvasMat,
     lineCap = "round",
   } = params
 
-  const [x1, y1] = applyToPoint(transform, [start.x, start.y])
-  const [x2, y2] = applyToPoint(transform, [end.x, end.y])
-  const scaledStrokeWidth = strokeWidth * Math.abs(transform.a)
+  const [x1, y1] = applyToPoint(realToCanvasMat, [start.x, start.y])
+  const [x2, y2] = applyToPoint(realToCanvasMat, [end.x, end.y])
+  const scaledStrokeWidth = strokeWidth * Math.abs(realToCanvasMat.a)
 
   ctx.beginPath()
   ctx.moveTo(x1, y1)

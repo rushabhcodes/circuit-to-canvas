@@ -9,7 +9,7 @@ import { drawPolygon } from "../shapes/polygon"
 export interface DrawPcbSmtPadParams {
   ctx: CanvasContext
   pad: PcbSmtPad
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
@@ -21,7 +21,7 @@ function layerToColor(layer: string, colorMap: PcbColorMap): string {
 }
 
 export function drawPcbSmtPad(params: DrawPcbSmtPadParams): void {
-  const { ctx, pad, transform, colorMap } = params
+  const { ctx, pad, realToCanvasMat, colorMap } = params
 
   const color = layerToColor(pad.layer, colorMap)
 
@@ -32,7 +32,7 @@ export function drawPcbSmtPad(params: DrawPcbSmtPadParams): void {
       width: pad.width,
       height: pad.height,
       fill: color,
-      transform,
+      realToCanvasMat,
       borderRadius:
         (pad as { corner_radius?: number }).corner_radius ??
         pad.rect_border_radius ??
@@ -48,7 +48,7 @@ export function drawPcbSmtPad(params: DrawPcbSmtPadParams): void {
       width: pad.width,
       height: pad.height,
       fill: color,
-      transform,
+      realToCanvasMat,
       borderRadius:
         (pad as { corner_radius?: number }).corner_radius ??
         pad.rect_border_radius ??
@@ -64,7 +64,7 @@ export function drawPcbSmtPad(params: DrawPcbSmtPadParams): void {
       center: { x: pad.x, y: pad.y },
       radius: pad.radius,
       fill: color,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -76,7 +76,7 @@ export function drawPcbSmtPad(params: DrawPcbSmtPadParams): void {
       width: pad.width,
       height: pad.height,
       fill: color,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -88,7 +88,7 @@ export function drawPcbSmtPad(params: DrawPcbSmtPadParams): void {
       width: pad.width,
       height: pad.height,
       fill: color,
-      transform,
+      realToCanvasMat,
       rotation: pad.ccw_rotation ?? 0,
     })
     return
@@ -100,7 +100,7 @@ export function drawPcbSmtPad(params: DrawPcbSmtPadParams): void {
         ctx,
         points: pad.points,
         fill: color,
-        transform,
+        realToCanvasMat,
       })
     }
     return

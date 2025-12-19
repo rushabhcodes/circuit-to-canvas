@@ -139,6 +139,6 @@ export interface CameraBounds {
 
 export interface DrawContext {
   ctx: CanvasRenderingContext2D
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }

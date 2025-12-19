@@ -9,12 +9,12 @@ import { drawPill } from "../shapes/pill"
 export interface DrawPcbPlatedHoleParams {
   ctx: CanvasContext
   hole: PcbPlatedHole
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
-  const { ctx, hole, transform, colorMap } = params
+  const { ctx, hole, realToCanvasMat, colorMap } = params
 
   if (hole.shape === "circle") {
     // Draw outer copper ring
@@ -23,7 +23,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       center: { x: hole.x, y: hole.y },
       radius: hole.outer_diameter / 2,
       fill: colorMap.copper.top,
-      transform,
+      realToCanvasMat,
     })
 
     // Draw inner drill hole
@@ -32,7 +32,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       center: { x: hole.x, y: hole.y },
       radius: hole.hole_diameter / 2,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -45,7 +45,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       width: hole.outer_width,
       height: hole.outer_height,
       fill: colorMap.copper.top,
-      transform,
+      realToCanvasMat,
       rotation: hole.ccw_rotation,
     })
 
@@ -56,7 +56,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       width: hole.hole_width,
       height: hole.hole_height,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
       rotation: hole.ccw_rotation,
     })
     return
@@ -70,7 +70,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       width: hole.outer_width,
       height: hole.outer_height,
       fill: colorMap.copper.top,
-      transform,
+      realToCanvasMat,
       rotation: hole.ccw_rotation,
     })
 
@@ -81,7 +81,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       width: hole.hole_width,
       height: hole.hole_height,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
       rotation: hole.ccw_rotation,
     })
     return
@@ -95,7 +95,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       width: hole.rect_pad_width,
       height: hole.rect_pad_height,
       fill: colorMap.copper.top,
-      transform,
+      realToCanvasMat,
       borderRadius: (hole as any).rect_border_radius ?? 0,
     })
 
@@ -107,7 +107,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       center: { x: holeX, y: holeY },
       radius: hole.hole_diameter / 2,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -120,7 +120,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       width: hole.rect_pad_width,
       height: hole.rect_pad_height,
       fill: colorMap.copper.top,
-      transform,
+      realToCanvasMat,
       borderRadius: (hole as any).rect_border_radius ?? 0,
     })
 
@@ -133,7 +133,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       width: hole.hole_width,
       height: hole.hole_height,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -146,7 +146,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       width: hole.rect_pad_width,
       height: hole.rect_pad_height,
       fill: colorMap.copper.top,
-      transform,
+      realToCanvasMat,
       borderRadius: (hole as any).rect_border_radius ?? 0,
       rotation: hole.rect_ccw_rotation,
     })
@@ -160,7 +160,7 @@ export function drawPcbPlatedHole(params: DrawPcbPlatedHoleParams): void {
       width: hole.hole_width,
       height: hole.hole_height,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
       rotation: hole.hole_ccw_rotation,
     })
     return

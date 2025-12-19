@@ -9,12 +9,12 @@ import { drawPill } from "../shapes/pill"
 export interface DrawPcbHoleParams {
   ctx: CanvasContext
   hole: PCBHole
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export function drawPcbHole(params: DrawPcbHoleParams): void {
-  const { ctx, hole, transform, colorMap } = params
+  const { ctx, hole, realToCanvasMat, colorMap } = params
 
   if (hole.hole_shape === "circle") {
     drawCircle({
@@ -22,7 +22,7 @@ export function drawPcbHole(params: DrawPcbHoleParams): void {
       center: { x: hole.x, y: hole.y },
       radius: hole.hole_diameter / 2,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -34,7 +34,7 @@ export function drawPcbHole(params: DrawPcbHoleParams): void {
       width: hole.hole_diameter,
       height: hole.hole_diameter,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -46,7 +46,7 @@ export function drawPcbHole(params: DrawPcbHoleParams): void {
       width: hole.hole_width,
       height: hole.hole_height,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -58,7 +58,7 @@ export function drawPcbHole(params: DrawPcbHoleParams): void {
       width: hole.hole_width,
       height: hole.hole_height,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -70,7 +70,7 @@ export function drawPcbHole(params: DrawPcbHoleParams): void {
       width: hole.hole_width,
       height: hole.hole_height,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -82,7 +82,7 @@ export function drawPcbHole(params: DrawPcbHoleParams): void {
       width: hole.hole_width,
       height: hole.hole_height,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
       rotation: (hole as any).ccw_rotation ?? 0,
     })
     return

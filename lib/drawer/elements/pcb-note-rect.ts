@@ -6,12 +6,12 @@ import { drawRect } from "../shapes/rect"
 export interface DrawPcbNoteRectParams {
   ctx: CanvasContext
   rect: PcbNoteRect
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export function drawPcbNoteRect(params: DrawPcbNoteRectParams): void {
-  const { ctx, rect, transform, colorMap } = params
+  const { ctx, rect, realToCanvasMat, colorMap } = params
 
   // Use the color from the rect if provided, otherwise use a default color
   // Notes are typically shown in a distinct color
@@ -31,7 +31,7 @@ export function drawPcbNoteRect(params: DrawPcbNoteRectParams): void {
     stroke: hasStroke ? color : undefined,
     strokeWidth: hasStroke ? rect.stroke_width : undefined,
     borderRadius: rect.corner_radius,
-    transform,
+    realToCanvasMat,
     isStrokeDashed,
   })
 }

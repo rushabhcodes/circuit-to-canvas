@@ -6,12 +6,12 @@ import { drawCircle } from "../shapes/circle"
 export interface DrawPcbViaParams {
   ctx: CanvasContext
   via: PCBVia
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export function drawPcbVia(params: DrawPcbViaParams): void {
-  const { ctx, via, transform, colorMap } = params
+  const { ctx, via, realToCanvasMat, colorMap } = params
 
   // Draw outer copper ring
   drawCircle({
@@ -19,7 +19,7 @@ export function drawPcbVia(params: DrawPcbViaParams): void {
     center: { x: via.x, y: via.y },
     radius: via.outer_diameter / 2,
     fill: colorMap.copper.top,
-    transform,
+    realToCanvasMat,
   })
 
   // Draw inner drill hole
@@ -28,6 +28,6 @@ export function drawPcbVia(params: DrawPcbViaParams): void {
     center: { x: via.x, y: via.y },
     radius: via.hole_diameter / 2,
     fill: colorMap.drill,
-    transform,
+    realToCanvasMat,
   })
 }

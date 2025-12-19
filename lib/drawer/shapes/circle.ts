@@ -7,14 +7,14 @@ export interface DrawCircleParams {
   center: { x: number; y: number }
   radius: number
   fill: string
-  transform: Matrix
+  realToCanvasMat: Matrix
 }
 
 export function drawCircle(params: DrawCircleParams): void {
-  const { ctx, center, radius, fill, transform } = params
+  const { ctx, center, radius, fill, realToCanvasMat } = params
 
-  const [cx, cy] = applyToPoint(transform, [center.x, center.y])
-  const scaledRadius = radius * Math.abs(transform.a)
+  const [cx, cy] = applyToPoint(realToCanvasMat, [center.x, center.y])
+  const scaledRadius = radius * Math.abs(realToCanvasMat.a)
 
   ctx.beginPath()
   ctx.arc(cx, cy, scaledRadius, 0, Math.PI * 2)

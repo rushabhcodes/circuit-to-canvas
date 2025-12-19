@@ -16,7 +16,7 @@ test("draw horizontal pill", async () => {
     width: 70,
     height: 30,
     fill: "#ff00ff",
-    transform: identity(),
+    realToCanvasMat: identity(),
   })
 
   await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
@@ -37,7 +37,7 @@ test("draw vertical pill", async () => {
     width: 30,
     height: 70,
     fill: "#ff00ff",
-    transform: identity(),
+    realToCanvasMat: identity(),
   })
 
   await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(

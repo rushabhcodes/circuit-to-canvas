@@ -8,12 +8,12 @@ import { drawPolygon } from "../shapes/polygon"
 export interface DrawPcbCutoutParams {
   ctx: CanvasContext
   cutout: PcbCutout
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export function drawPcbCutout(params: DrawPcbCutoutParams): void {
-  const { ctx, cutout, transform, colorMap } = params
+  const { ctx, cutout, realToCanvasMat, colorMap } = params
 
   if (cutout.shape === "rect") {
     drawRect({
@@ -22,7 +22,7 @@ export function drawPcbCutout(params: DrawPcbCutoutParams): void {
       width: cutout.width,
       height: cutout.height,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
       rotation: cutout.rotation ?? 0,
     })
     return
@@ -34,7 +34,7 @@ export function drawPcbCutout(params: DrawPcbCutoutParams): void {
       center: cutout.center,
       radius: cutout.radius,
       fill: colorMap.drill,
-      transform,
+      realToCanvasMat,
     })
     return
   }
@@ -45,7 +45,7 @@ export function drawPcbCutout(params: DrawPcbCutoutParams): void {
         ctx,
         points: cutout.points,
         fill: colorMap.drill,
-        transform,
+        realToCanvasMat,
       })
     }
     return

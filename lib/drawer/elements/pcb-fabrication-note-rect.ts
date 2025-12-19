@@ -6,14 +6,14 @@ import { drawRect } from "../shapes/rect"
 export interface DrawPcbFabricationNoteRectParams {
   ctx: CanvasContext
   rect: PcbFabricationNoteRect
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export function drawPcbFabricationNoteRect(
   params: DrawPcbFabricationNoteRectParams,
 ): void {
-  const { ctx, rect, transform, colorMap } = params
+  const { ctx, rect, realToCanvasMat, colorMap } = params
 
   // Use the color from the rect if provided, otherwise use a default color
   // Fabrication notes are typically shown in a distinct color
@@ -33,7 +33,7 @@ export function drawPcbFabricationNoteRect(
     stroke: hasStroke ? color : undefined,
     strokeWidth: hasStroke ? rect.stroke_width : undefined,
     borderRadius: rect.corner_radius,
-    transform,
+    realToCanvasMat,
     isStrokeDashed,
   })
 }

@@ -8,7 +8,7 @@ export interface DrawPathParams {
   fill?: string
   stroke?: string
   strokeWidth?: number
-  transform: Matrix
+  realToCanvasMat: Matrix
   closePath?: boolean
 }
 
@@ -19,7 +19,7 @@ export function drawPath(params: DrawPathParams): void {
     fill,
     stroke,
     strokeWidth = 1,
-    transform,
+    realToCanvasMat,
     closePath = false,
   } = params
 
@@ -27,17 +27,17 @@ export function drawPath(params: DrawPathParams): void {
 
   ctx.beginPath()
 
-  const transformedPoints = points.map((p) =>
-    applyToPoint(transform, [p.x, p.y]),
+  const canvasPoints = points.map((p) =>
+    applyToPoint(realToCanvasMat, [p.x, p.y]),
   )
 
-  const firstPoint = transformedPoints[0]
+  const firstPoint = canvasPoints[0]
   if (!firstPoint) return
   const [firstX, firstY] = firstPoint
   ctx.moveTo(firstX, firstY)
 
-  for (let i = 1; i < transformedPoints.length; i++) {
-    const point = transformedPoints[i]
+  for (let i = 1; i < canvasPoints.length; i++) {
+    const point = canvasPoints[i]
     if (!point) continue
     const [x, y] = point
     ctx.lineTo(x, y)
@@ -53,7 +53,7 @@ export function drawPath(params: DrawPathParams): void {
   }
 
   if (stroke) {
-    const scaledStrokeWidth = strokeWidth * Math.abs(transform.a)
+    const scaledStrokeWidth = strokeWidth * Math.abs(realToCanvasMat.a)
     ctx.strokeStyle = stroke
     ctx.lineWidth = scaledStrokeWidth
     ctx.stroke()

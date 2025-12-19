@@ -15,7 +15,7 @@ test("draw circle", async () => {
     center: { x: 50, y: 50 },
     radius: 30,
     fill: "#ff0000",
-    transform: identity(),
+    realToCanvasMat: identity(),
   })
 
   await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(

@@ -16,7 +16,7 @@ test("draw rect", async () => {
     width: 60,
     height: 40,
     fill: "#00ff00",
-    transform: identity(),
+    realToCanvasMat: identity(),
   })
 
   await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
@@ -37,7 +37,7 @@ test("draw rect with border radius", async () => {
     width: 60,
     height: 40,
     fill: "#00ff00",
-    transform: identity(),
+    realToCanvasMat: identity(),
     borderRadius: 10,
   })
 

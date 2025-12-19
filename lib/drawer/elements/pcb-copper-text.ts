@@ -12,7 +12,7 @@ import {
 export interface DrawPcbCopperTextParams {
   ctx: CanvasContext
   text: PcbCopperText
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
@@ -33,16 +33,16 @@ function mapAnchorAlignment(alignment?: string): AnchorAlignment {
 }
 
 export function drawPcbCopperText(params: DrawPcbCopperTextParams): void {
-  const { ctx, text, transform, colorMap } = params
+  const { ctx, text, realToCanvasMat, colorMap } = params
 
   const content = text.text ?? ""
   if (!content) return
 
-  const [x, y] = applyToPoint(transform, [
+  const [x, y] = applyToPoint(realToCanvasMat, [
     text.anchor_position.x,
     text.anchor_position.y,
   ])
-  const scale = Math.abs(transform.a)
+  const scale = Math.abs(realToCanvasMat.a)
   const fontSize = (text.font_size ?? 1) * scale
   const rotation = text.ccw_rotation ?? 0
   const padding = {

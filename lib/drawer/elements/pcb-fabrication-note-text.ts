@@ -6,7 +6,7 @@ import { drawText } from "../shapes/text"
 export interface DrawPcbFabricationNoteTextParams {
   ctx: CanvasContext
   text: PcbFabricationNoteText
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
@@ -21,14 +21,14 @@ function layerToColor(layer: string, colorMap: PcbColorMap): string {
 export function drawPcbFabricationNoteText(
   params: DrawPcbFabricationNoteTextParams,
 ): void {
-  const { ctx, text, transform, colorMap } = params
+  const { ctx, text, realToCanvasMat, colorMap } = params
 
   const defaultColor = layerToColor(text.layer, colorMap)
   const color = text.color ?? defaultColor
   const fontSize = text.font_size
 
   // Use @tscircuit/alphabet to draw text
-  // Pass real-world coordinates and let drawText apply the transform
+  // Pass real-world coordinates and let drawText apply the realToCanvasMat
   drawText({
     ctx,
     text: text.text,
@@ -36,7 +36,7 @@ export function drawPcbFabricationNoteText(
     y: text.anchor_position.y,
     fontSize,
     color,
-    transform,
+    realToCanvasMat,
     anchorAlignment: text.anchor_alignment,
   })
 }

@@ -6,12 +6,12 @@ import { drawLine } from "../shapes/line"
 export interface DrawPcbNotePathParams {
   ctx: CanvasContext
   path: PcbNotePath
-  transform: Matrix
+  realToCanvasMat: Matrix
   colorMap: PcbColorMap
 }
 
 export function drawPcbNotePath(params: DrawPcbNotePathParams): void {
-  const { ctx, path, transform, colorMap } = params
+  const { ctx, path, realToCanvasMat, colorMap } = params
 
   // Use the color from the path if provided, otherwise use a default color
   // Notes are typically shown in a distinct color
@@ -33,7 +33,7 @@ export function drawPcbNotePath(params: DrawPcbNotePathParams): void {
       end: { x: end.x, y: end.y },
       strokeWidth: path.stroke_width ?? 0.1,
       stroke: color,
-      transform,
+      realToCanvasMat,
     })
   }
 }
