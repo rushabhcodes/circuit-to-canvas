@@ -25,6 +25,7 @@ import type {
   PcbNoteDimension,
   PcbNoteLine,
   PcbRenderLayer,
+  PcbCopperPourBRep,
 } from "circuit-json"
 import {
   identity,
@@ -398,7 +399,7 @@ export class CircuitToCanvasDrawer {
       if (element.shape === "brep") {
         drawPcbCopperPourBRep({
           ctx: this.ctx,
-          element: element as any,
+          element: element as PcbCopperPourBRep,
           realToCanvasMat: this.realToCanvasMat,
           colorMap: this.colorMap,
         })
