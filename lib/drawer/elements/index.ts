@@ -99,3 +99,14 @@ export {
   drawPcbNoteDimension,
   type DrawPcbNoteDimensionParams,
 } from "./pcb-note-dimension"
+
+export {
+  drawPcbBrepShape,
+  type DrawPcbBrepShapeParams,
+  type PcbBrepShape,
+  type BrepGeometry,
+  type BrepFace,
+  type BrepLoop,
+  type BrepLoopEdge,
+  type BrepVertex,
+} from "./pcb-brep-shape"
