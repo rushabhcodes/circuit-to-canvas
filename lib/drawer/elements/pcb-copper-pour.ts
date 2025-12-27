@@ -2,7 +2,6 @@ import type { PcbCopperPour, PcbCopperPourBRep } from "circuit-json"
 import type { Matrix } from "transformation-matrix"
 import { applyToPoint } from "transformation-matrix"
 import type { PcbColorMap, CanvasContext } from "../types"
-import { drawRect } from "../shapes/rect"
 import { drawPolygon } from "../shapes/polygon"
 import { drawPath } from "../shapes/path"
 
@@ -11,10 +10,6 @@ export interface DrawPcbCopperPourParams {
   pour: PcbCopperPour
   realToCanvasMat: Matrix
   colorMap: PcbColorMap
-}
-
-interface ExtendedCanvasContext extends CanvasContext {
-  globalAlpha?: number
 }
 
 interface BrepVertex {
@@ -33,15 +28,6 @@ interface BrepLoopEdge {
 
 interface BrepLoop {
   edges: BrepLoopEdge[]
-}
-
-interface BrepFace {
-  outer: BrepLoop
-  holes?: BrepLoop[]
-  plane?: {
-    normal: { x: number; y: number; z: number }
-    offset: number
-  }
 }
 
 export interface DrawPcbCopperPourBRepParams {
@@ -276,9 +262,7 @@ export function drawPcbCopperPourBRep(
   const fillColor = getDefaultFillColor(element.layer, colorMap)
   const strokeWidth = 0.1
 
-  if (opacity !== undefined) {
-    ;(ctx as ExtendedCanvasContext).globalAlpha = opacity
-  }
+  ctx.globalAlpha = opacity
 
   for (const face of geometry.faces) {
     const outerPolygon = projectLoopTo2D(face.outer)

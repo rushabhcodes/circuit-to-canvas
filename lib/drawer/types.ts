@@ -51,6 +51,7 @@ export interface CanvasContext {
   }
   font: string
   textAlign: "start" | "end" | "left" | "right" | "center"
+  globalAlpha?: number
 }
 
 export type CopperLayerName =
