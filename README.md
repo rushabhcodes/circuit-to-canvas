@@ -45,6 +45,7 @@ This checklist tracks PCB drawing features from [circuit-to-svg](https://github.
 - [x] `pcb_smtpad` - SMT pads (rect, circle, rotated_rect, pill shapes)
 - [x] `pcb_copper_pour` - Copper pour areas (rect, polygon shapes)
 - [x] `pcb_cutout` - Board cutouts (rect, circle, polygon shapes)
+- [x] `pcb_solder_paste` - Solder paste apertures (opt-in with `drawSolderPaste`)
 
 ### Silkscreen Elements
 

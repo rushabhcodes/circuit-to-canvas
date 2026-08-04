@@ -8,6 +8,11 @@ export { drawPcbVia, type DrawPcbViaParams } from "./pcb-via"
 export { drawPcbHole, type DrawPcbHoleParams } from "./pcb-hole"
 
 export { drawPcbSmtPad, type DrawPcbSmtPadParams } from "./pcb-smtpad"
+
+export {
+  drawPcbSolderPaste,
+  type DrawPcbSolderPasteParams,
+} from "./pcb-solder-paste"
 export {
   drawSoldermaskRingForRect,
   drawSoldermaskRingForCircle,
