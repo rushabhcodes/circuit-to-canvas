@@ -18,6 +18,13 @@ export function shouldDrawElement(
     return true
   }
 
+  // Older circuit-json-util versions do not classify silkscreen graphics.
+  if (element.type === "pcb_silkscreen_graphic") {
+    return options.layers.some(
+      (layer) => layer === `${element.layer}_silkscreen`,
+    )
+  }
+
   const elementLayers = getElementRenderLayers(element)
 
   // If element has no layer info (board, holes, etc.), always draw

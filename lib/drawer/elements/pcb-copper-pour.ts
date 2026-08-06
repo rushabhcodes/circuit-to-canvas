@@ -233,6 +233,8 @@ function drawRing(
   }
 }
 
+export { drawRing as drawBrepRing }
+
 export function drawPcbCopperPour(params: DrawPcbCopperPourParams): void {
   const { ctx, pour, realToCanvasMat, colorMap } = params
 

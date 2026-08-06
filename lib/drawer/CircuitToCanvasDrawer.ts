@@ -23,6 +23,7 @@ import type {
   PcbPlatedHole,
   PcbRenderLayer,
   PcbSilkscreenCircle,
+  PcbSilkscreenGraphic,
   PcbSilkscreenLine,
   PcbSilkscreenOval,
   PcbSilkscreenPath,
@@ -56,6 +57,7 @@ import { drawPcbNoteText } from "./elements/pcb-note-text"
 import { drawPcbPanelElement } from "./elements/pcb-panel"
 import { drawPcbPlatedHole } from "./elements/pcb-plated-hole"
 import { drawPcbSilkscreenCircle } from "./elements/pcb-silkscreen-circle"
+import { drawPcbSilkscreenGraphic } from "./elements/pcb-silkscreen-graphic"
 import { drawPcbSilkscreenLine } from "./elements/pcb-silkscreen-line"
 import { drawPcbSilkscreenOval } from "./elements/pcb-silkscreen-oval"
 import { drawPcbSilkscreenPath } from "./elements/pcb-silkscreen-path"
@@ -489,6 +491,15 @@ export class CircuitToCanvasDrawer {
         drawPcbSilkscreenOval({
           ctx: this.ctx,
           oval: element as PcbSilkscreenOval,
+          realToCanvasMat: this.realToCanvasMat,
+          colorMap: this.colorMap,
+        })
+      }
+
+      if (element.type === "pcb_silkscreen_graphic") {
+        drawPcbSilkscreenGraphic({
+          ctx: this.ctx,
+          graphic: element as PcbSilkscreenGraphic,
           realToCanvasMat: this.realToCanvasMat,
           colorMap: this.colorMap,
         })
