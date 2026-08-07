@@ -7,9 +7,9 @@ import type {
 } from "circuit-json"
 import type { Matrix } from "transformation-matrix"
 import type { CanvasContext, PcbColorMap } from "../../types"
+import { createDrawingLayerContext } from "../../layers/create-drawing-layer-context"
+import { mergeDrawingLayer } from "../../layers/merge-drawing-layer"
 import { drawBoardSoldermask } from "./board"
-import { mergeSoldermaskLayer } from "./merge-soldermask-layer"
-import { createSoldermaskLayerContext } from "./create-soldermask-layer-context"
 import { drawPanelSoldermask } from "./panel"
 import { processCutoutSoldermask } from "./cutout"
 import { processCopperPourSoldermask } from "./copper-pour/copper-pour"
@@ -62,8 +62,7 @@ export function drawPcbSoldermask(params: DrawPcbSoldermaskParams): void {
   )
 
   const soldermaskCtx =
-    createSoldermaskLayerContext(ctx, ctx.canvas.width, ctx.canvas.height) ??
-    ctx
+    createDrawingLayerContext(ctx, ctx.canvas.width, ctx.canvas.height) ?? ctx
 
   // Step 1: Draw base soldermask surfaces (panel and boards).
   if (panel) {
@@ -134,7 +133,7 @@ export function drawPcbSoldermask(params: DrawPcbSoldermaskParams): void {
     })
   }
 
-  mergeSoldermaskLayer(ctx, soldermaskCtx)
+  mergeDrawingLayer(ctx, soldermaskCtx)
 }
 
 /**

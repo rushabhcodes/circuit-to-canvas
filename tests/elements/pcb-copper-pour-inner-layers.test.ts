@@ -82,7 +82,7 @@ function createCopperPourWithTraceScene(
 }
 
 for (const layer of INNER_LAYERS) {
-  test(`draw ${layer} copper pour with trace`, async () => {
+  test(`hide ${layer} trace covered by its copper pour`, async () => {
     const elements = createCopperPourWithTraceScene(layer)
 
     const withTrace = renderCopperPourScene(elements, layer)
@@ -91,7 +91,7 @@ for (const layer of INNER_LAYERS) {
       layer,
     )
 
-    expect(Buffer.compare(withTrace, withoutTrace)).not.toBe(0)
+    expect(Buffer.compare(withTrace, withoutTrace)).toBe(0)
     await expect(withTrace).toMatchPngSnapshot(
       import.meta.path,
       `${layer}-copper-pour-with-trace`,

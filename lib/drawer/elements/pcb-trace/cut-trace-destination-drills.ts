@@ -1,4 +1,4 @@
-import type { PcbPlatedHole, PcbTrace, PcbVia } from "circuit-json"
+import type { LayerRef, PcbPlatedHole, PcbTrace, PcbVia } from "circuit-json"
 import type { Matrix } from "transformation-matrix"
 import { drawCircle } from "../../shapes/circle"
 import { drawOval } from "../../shapes/oval"
@@ -44,7 +44,7 @@ export function cutTraceDestinationsAtDrills(params: {
   realToCanvasMat: Matrix
   vias: PcbVia[]
   platedHoles: PcbPlatedHole[]
-  layer?: "top" | "bottom"
+  layer?: LayerRef
 }): void {
   const { ctx, trace, realToCanvasMat, vias, platedHoles, layer } = params
   if (!trace.route || trace.route.length < 2) return

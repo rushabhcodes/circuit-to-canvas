@@ -1,23 +1,23 @@
-import type { CanvasContext } from "../../types"
+import type { CanvasContext } from "../types"
 
-interface SoldermaskCanvas {
+interface DrawingLayerCanvas {
   width: number
   height: number
   getContext(contextId: "2d"): CanvasContext | null
 }
 
-type SoldermaskCanvasConstructor = new (
+type DrawingLayerCanvasConstructor = new (
   width: number,
   height: number,
-) => SoldermaskCanvas
+) => DrawingLayerCanvas
 
 function isCanvasConstructor(
   value: unknown,
-): value is SoldermaskCanvasConstructor {
+): value is DrawingLayerCanvasConstructor {
   return typeof value === "function"
 }
 
-export function createSoldermaskLayerContext(
+export function createDrawingLayerContext(
   baseCtx: CanvasContext,
   width: number,
   height: number,
@@ -25,7 +25,7 @@ export function createSoldermaskLayerContext(
   if (width <= 0 || height <= 0) return null
 
   const g = globalThis
-  let layerCanvas: SoldermaskCanvas | null = null
+  let layerCanvas: DrawingLayerCanvas | null = null
 
   if ("OffscreenCanvas" in g && typeof g.OffscreenCanvas === "function") {
     layerCanvas = new g.OffscreenCanvas(width, height)

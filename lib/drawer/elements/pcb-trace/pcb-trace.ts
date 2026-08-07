@@ -1,4 +1,4 @@
-import type { PcbPlatedHole, PcbTrace, PcbVia } from "circuit-json"
+import type { LayerRef, PcbPlatedHole, PcbTrace, PcbVia } from "circuit-json"
 import type { Matrix } from "transformation-matrix"
 import { drawLine } from "../../shapes/line"
 import { drawPolygon } from "../../shapes/polygon"
@@ -16,11 +16,12 @@ export interface DrawPcbTraceParams {
   colorMap: PcbColorMap
   vias?: PcbVia[]
   platedHoles?: PcbPlatedHole[]
+  layer?: LayerRef
 }
 
 // Draws a PCB trace route as lines or a filled polygon when widths vary.
 export function drawPcbTrace(params: DrawPcbTraceParams): void {
-  const { ctx, trace, realToCanvasMat, colorMap } = params
+  const { ctx, trace, realToCanvasMat, colorMap, layer: layerFilter } = params
 
   if (!trace.route || !Array.isArray(trace.route) || trace.route.length < 2) {
     return
@@ -31,6 +32,7 @@ export function drawPcbTrace(params: DrawPcbTraceParams): void {
   for (const segment of segments) {
     const layer = segment[0]?.layer
     if (!layer) continue
+    if (layerFilter && layer !== layerFilter) continue
     const color = layerToColor(layer, colorMap)
 
     if (hasVariableWidth(segment)) {
@@ -70,5 +72,6 @@ export function drawPcbTrace(params: DrawPcbTraceParams): void {
     realToCanvasMat,
     vias: params.vias ?? [],
     platedHoles: params.platedHoles ?? [],
+    layer: layerFilter,
   })
 }

@@ -1,4 +1,4 @@
-import type { CanvasContext } from "../../types"
+import type { CanvasContext } from "../types"
 
 type PatternRepetition = "repeat" | "repeat-x" | "repeat-y" | "no-repeat" | null
 
@@ -18,34 +18,29 @@ function isPatternCapableContext(
   )
 }
 
-export function mergeSoldermaskLayer(
+export function mergeDrawingLayer(
   baseCtx: CanvasContext,
-  soldermaskCtx: CanvasContext,
-): void {
-  if (baseCtx === soldermaskCtx) return
-  if (soldermaskCtx.canvas.width <= 0 || soldermaskCtx.canvas.height <= 0)
-    return
-  if (!isPatternCapableContext(baseCtx)) return
+  layerCtx: CanvasContext,
+): boolean {
+  if (baseCtx === layerCtx) return false
+  if (layerCtx.canvas.width <= 0 || layerCtx.canvas.height <= 0) return false
+  if (!isPatternCapableContext(baseCtx)) return false
 
   let pattern: CanvasPattern | null = null
   try {
     pattern = baseCtx.createPattern(
-      soldermaskCtx.canvas as CanvasImageSource,
+      layerCtx.canvas as CanvasImageSource,
       "no-repeat",
     )
   } catch {
-    return
+    return false
   }
-  if (!pattern) return
+  if (!pattern) return false
 
   baseCtx.save()
   baseCtx.globalCompositeOperation = "source-over"
   baseCtx.fillStyle = pattern
-  baseCtx.fillRect(
-    0,
-    0,
-    soldermaskCtx.canvas.width,
-    soldermaskCtx.canvas.height,
-  )
+  baseCtx.fillRect(0, 0, layerCtx.canvas.width, layerCtx.canvas.height)
   baseCtx.restore()
+  return true
 }
