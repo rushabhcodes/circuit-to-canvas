@@ -80,6 +80,12 @@ import {
 
 export interface DrawElementsOptions {
   layers?: PcbRenderLayer[]
+  /**
+   * Elements used only to find copper pours when clipping traces. This is
+   * useful when `elements` is a filtered subset, such as a trace-only render
+   * pass in an interactive viewer. Defaults to `elements`.
+   */
+  clipContextElements?: AnyCircuitElement[]
   /** Whether to render the soldermask layer. Defaults to false. */
   drawSoldermask?: boolean
   /** Whether to render pcb_solder_paste elements. Defaults to false. */
@@ -286,7 +292,9 @@ export class CircuitToCanvasDrawer {
       (el): el is PcbCutout =>
         shouldDrawElement(el, options) && el.type === "pcb_cutout",
     )
-    const drawableCopperPours = elements.filter(
+    const drawableCopperPours = (
+      options.clipContextElements ?? elements
+    ).filter(
       (el): el is PcbCopperPour =>
         shouldDrawElement(el, options) && el.type === "pcb_copper_pour",
     )

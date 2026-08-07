@@ -58,3 +58,23 @@ test.each(["top", "bottom"] satisfies LayerRef[])(
   },
   { timeout: 60_000 },
 )
+
+test("clips a trace-only Game Boy render using full-circuit context", async () => {
+  const canvas = createCanvas(652, 800)
+  const ctx = canvas.getContext("2d")
+  const drawer = new CircuitToCanvasDrawer(ctx)
+
+  ctx.fillStyle = "#000"
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+  drawer.setCameraBounds({ minX: -53, maxX: 53, minY: -65, maxY: 65 })
+  drawer.drawElements(gameboyTraces, {
+    layers: ["top_copper"],
+    clipContextElements: gameboyPcb,
+  })
+
+  await expect(canvas.toBuffer("image/png")).toMatchPngSnapshot(
+    import.meta.path,
+    "abse-gameboy-top-layer-traces-with-clip-context",
+  )
+}, 60_000)
