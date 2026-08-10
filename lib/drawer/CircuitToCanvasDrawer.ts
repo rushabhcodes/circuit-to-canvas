@@ -104,6 +104,8 @@ export interface DrawElementsOptions {
   minBoardOutlineStrokePx?: number
   /** Whether to render pcb_note elements. Defaults to true. */
   showPcbNotes?: boolean
+  /** Clear drill holes and cutouts from the canvas instead of painting them with the drill color. Defaults to false. */
+  clearDrillHoles?: boolean
 }
 
 interface CanvasLike {
@@ -112,10 +114,11 @@ interface CanvasLike {
 
 function getCopperLayer(layers?: PcbRenderLayer[]): LayerRef {
   if (!layers || layers.length === 0) return "top"
-  const copperLayer = layers.find((candidate) => candidate.endsWith("_copper"))
-  return copperLayer
-    ? (copperLayer.slice(0, -"_copper".length) as LayerRef)
-    : "top"
+  const renderLayer =
+    layers.find((candidate) => candidate.endsWith("_copper")) ??
+    layers[0] ??
+    "top_copper"
+  return renderLayer.split("_")[0] as LayerRef
 }
 
 const isOnCopperLayer = (element: PcbVia | PcbPlatedHole, layer: LayerRef) =>
@@ -751,5 +754,52 @@ export class CircuitToCanvasDrawer {
         })
       }
     }
+
+    if (options.clearDrillHoles) {
+      this.clearDrillHoles(elements, layer)
+    }
+  }
+
+  private clearDrillHoles(
+    elements: AnyCircuitElement[],
+    layer: LayerRef,
+  ): void {
+    const apertures = elements.filter(
+      (element) =>
+        element.type === "pcb_hole" ||
+        element.type === "pcb_plated_hole" ||
+        element.type === "pcb_via" ||
+        element.type === "pcb_cutout",
+    )
+    if (apertures.length === 0) return
+
+    const transparent = "rgba(0,0,0,0)"
+    const apertureDrawer = new CircuitToCanvasDrawer(this.ctx)
+    apertureDrawer.realToCanvasMat = this.realToCanvasMat
+    apertureDrawer.configure({
+      colorOverrides: {
+        copper: {
+          top: transparent,
+          bottom: transparent,
+          inner1: transparent,
+          inner2: transparent,
+          inner3: transparent,
+          inner4: transparent,
+          inner5: transparent,
+          inner6: transparent,
+          inner7: transparent,
+          inner8: transparent,
+        },
+        drill: "#000",
+      },
+    })
+
+    this.ctx.save()
+    this.ctx.globalCompositeOperation = "destination-out"
+    apertureDrawer.drawElements(apertures, {
+      layers: [`${layer}_copper` as PcbRenderLayer],
+      showPcbNotes: false,
+    })
+    this.ctx.restore()
   }
 }
