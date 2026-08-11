@@ -6,7 +6,6 @@ import type { CanvasContext, PcbColorMap } from "../../types"
 import { buildTracePolygon } from "./build-trace-polygon"
 import { collectTraceSegments } from "./collect-trace-segments"
 import { cutTraceDestinationsAtDrills } from "./cut-trace-destination-drills"
-import { hasVariableWidth } from "./has-variable-width"
 import { layerToColor } from "./layer-to-color"
 
 export interface DrawPcbTraceParams {
@@ -35,17 +34,18 @@ export function drawPcbTrace(params: DrawPcbTraceParams): void {
     if (layerFilter && layer !== layerFilter) continue
     const color = layerToColor(layer, colorMap)
 
-    if (hasVariableWidth(segment)) {
-      const polygonPoints = buildTracePolygon(segment)
+    if (trace.route_thickness_mode === "interpolated") {
       drawPolygon({
         ctx,
-        points: polygonPoints,
+        points: buildTracePolygon(segment),
         fill: color,
         realToCanvasMat,
       })
       continue
     }
 
+    // Constant or unspecified modes use each segment width independently.
+    // Round caps overlap at route points without introducing polygon miters.
     for (let i = 0; i < segment.length - 1; i++) {
       const start = segment[i]
       const end = segment[i + 1]

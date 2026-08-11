@@ -2,7 +2,7 @@ import { expect, test } from "bun:test"
 import { createCanvas } from "@napi-rs/canvas"
 import { CircuitToCanvasDrawer } from "../../lib/drawer"
 
-test("draw trace with port hints", async () => {
+test("draw variable-width trace with port hints", async () => {
   const canvas = createCanvas(800, 600)
   const ctx = canvas.getContext("2d")
   const drawer = new CircuitToCanvasDrawer(ctx)
