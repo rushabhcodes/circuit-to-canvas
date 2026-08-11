@@ -11,6 +11,7 @@ export interface StackedPngSvgComparisonOptions {
   height?: number
   padding?: number
   drawSoldermask?: boolean
+  viewport?: Bounds
 }
 
 /**
@@ -29,9 +30,10 @@ export async function getStackedPngSvgComparison(
     height = 800,
     padding = 4,
     drawSoldermask = false,
+    viewport,
   } = options
 
-  const bounds = getBoundsOfPcbElements(circuitJson)
+  const bounds = viewport ?? getBoundsOfPcbElements(circuitJson)
 
   // Generate circuit-to-canvas PNG
   const canvas = createCanvas(width, height)
@@ -55,6 +57,7 @@ export async function getStackedPngSvgComparison(
   const svg = convertCircuitJsonToPcbSvg(circuitJson, {
     width,
     height,
+    viewport,
   })
   const svgPng = svgToPng(svg)
 
