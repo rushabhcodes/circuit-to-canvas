@@ -1,7 +1,7 @@
 import type { PcbSilkscreenGraphic } from "circuit-json"
 import type { Matrix } from "transformation-matrix"
+import { addBrepShapeToPath } from "../shapes/brep"
 import type { CanvasContext, PcbColorMap } from "../types"
-import { drawBrepRing } from "./pcb-copper-pour"
 
 export interface DrawPcbSilkscreenGraphicParams {
   ctx: CanvasContext
@@ -20,10 +20,7 @@ export function drawPcbSilkscreenGraphic(
       : colorMap.silkscreen.top
 
   ctx.beginPath()
-  drawBrepRing(ctx, graphic.brep_shape.outer_ring, realToCanvasMat)
-  for (const innerRing of graphic.brep_shape.inner_rings ?? []) {
-    drawBrepRing(ctx, innerRing, realToCanvasMat)
-  }
+  addBrepShapeToPath({ ctx, shape: graphic.brep_shape, realToCanvasMat })
   ctx.fillStyle = color
   ctx.fill("evenodd")
 }
