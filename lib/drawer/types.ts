@@ -102,12 +102,12 @@ export interface PcbColorMap {
 export const DEFAULT_PCB_COLOR_MAP: PcbColorMap = {
   copper: {
     top: "rgb(200, 52, 52)",
-    inner1: "rgb(255, 140, 0)",
-    inner2: "rgb(255, 215, 0)",
-    inner3: "rgb(50, 205, 50)",
-    inner4: "rgb(64, 224, 208)",
-    inner5: "rgb(138, 43, 226)",
-    inner6: "rgb(255, 105, 180)",
+    inner1: "rgb(127, 200, 127)",
+    inner2: "rgb(206, 125, 44)",
+    inner3: "rgb(79, 203, 203)",
+    inner4: "rgb(219, 98, 139)",
+    inner5: "rgb(167, 165, 198)",
+    inner6: "rgb(40, 204, 217)",
     inner7: "rgb(232, 178, 167)",
     inner8: "rgb(242, 237, 161)",
     bottom: "rgb(77, 127, 196)",
