@@ -67,6 +67,10 @@ export {
 } from "./pcb-silkscreen-oval"
 
 export { drawPcbCutout, type DrawPcbCutoutParams } from "./pcb-cutout"
+export {
+  drawPcbDebugObject,
+  type DrawPcbDebugObjectParams,
+} from "./pcb-debug-object"
 
 export { drawPcbKeepout, type DrawPcbKeepoutParams } from "./pcb-keepout"
 

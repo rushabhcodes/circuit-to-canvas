@@ -55,6 +55,13 @@ export interface CanvasContext {
   }
   font: string
   textAlign: "start" | "end" | "left" | "right" | "center"
+  textBaseline:
+    | "top"
+    | "hanging"
+    | "middle"
+    | "alphabetic"
+    | "ideographic"
+    | "bottom"
 }
 
 export type CopperLayerName = LayerRef

@@ -9,6 +9,7 @@ import type {
   PcbCourtyardOutline,
   PcbCourtyardRect,
   PcbCutout,
+  PcbDebugObject,
   PcbFabricationNoteDimension,
   PcbFabricationNotePath,
   PcbFabricationNoteRect,
@@ -43,6 +44,7 @@ import { drawPcbCourtyardCircle } from "./elements/pcb-courtyard-circle"
 import { drawPcbCourtyardOutline } from "./elements/pcb-courtyard-outline"
 import { drawPcbCourtyardRect } from "./elements/pcb-courtyard-rect"
 import { drawPcbCutout } from "./elements/pcb-cutout"
+import { drawPcbDebugObject } from "./elements/pcb-debug-object"
 import { drawPcbFabricationNoteDimension } from "./elements/pcb-fabrication-note-dimension"
 import { drawPcbFabricationNotePath } from "./elements/pcb-fabrication-note-path"
 import { drawPcbFabricationNoteRect } from "./elements/pcb-fabrication-note-rect"
@@ -104,6 +106,8 @@ export interface DrawElementsOptions {
   minBoardOutlineStrokePx?: number
   /** Whether to render pcb_note elements. Defaults to true. */
   showPcbNotes?: boolean
+  /** Whether to render pcb_debug_object overlays. Defaults to false. */
+  showDebugObjects?: boolean
   /** Clear drill holes and cutouts from the canvas instead of painting them with the drill color. Defaults to false. */
   clearDrillHoles?: boolean
 }
@@ -757,6 +761,27 @@ export class CircuitToCanvasDrawer {
 
     if (options.clearDrillHoles) {
       this.clearDrillHoles(elements, layer)
+    }
+
+    if (options.showDebugObjects) {
+      const rectLabelCounts = new Map<string, number>()
+      for (const element of elements) {
+        if (element.type !== "pcb_debug_object") continue
+        const rectKey =
+          element.shape === "rect"
+            ? `${element.center.x}:${element.center.y}:${element.size.width}:${element.size.height}`
+            : undefined
+        const labelStackIndex = rectKey
+          ? (rectLabelCounts.get(rectKey) ?? 0)
+          : 0
+        drawPcbDebugObject({
+          ctx: this.ctx,
+          debugObject: element as PcbDebugObject,
+          realToCanvasMat: this.realToCanvasMat,
+          labelStackIndex,
+        })
+        if (rectKey) rectLabelCounts.set(rectKey, labelStackIndex + 1)
+      }
     }
   }
 
