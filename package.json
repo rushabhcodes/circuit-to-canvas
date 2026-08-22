@@ -1,7 +1,7 @@
 {
   "name": "circuit-to-canvas",
   "main": "dist/index.js",
-  "version": "0.0.125",
+  "version": "0.0.126",
   "repository": {
     "type": "git",
     "url": "https://github.com/tscircuit/circuit-to-canvas.git"
